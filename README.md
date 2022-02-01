@@ -45,9 +45,9 @@ python3 camKapture.py
 
 `s` - capture image  
 `v` - start recording video  
-`b` - enable burst mode
-`t` - enable timer mode
-`Backspace` - return from any mode
+`b` - enable burst mode  
+`t` - enable timer mode  
+`Backspace` - return from any mode  
 `Space` - pause and unpause video capture  
 `Esc` - quit
 
