@@ -19,7 +19,7 @@ cap= cv2.VideoCapture(0)
 cap.set(3,854)
 cap.set(4,480)
 
-def white():
+def white_screen():
     frame=np.zeros([100,100,3],dtype=np.uint8)
     frame.fill(255)
     cv2.imshow('camKapture',frame)
@@ -40,18 +40,31 @@ def count(n):
         cv2.imshow('camKapture', frame)
         cv2.waitKeyEx(100)
         j=j-1
-    cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
-    white()
-    print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
-    return
+    else:
+        success, frame = cap.read()
+        cv2.imshow('camKapture', frame)
+        cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
+        white_screen()
+        print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
+        return
 
 def burst():
+    j=10
     while True :
-        count(3)
+        success, frame = cap.read()
         pressedKey = cv2.waitKeyEx(1) & 0xFF
-        if pressedKey == ord("b"):
+        cv2.imshow('camKapture', frame)
+        if j==0:
+            cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
+            white_screen()
+            print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
+            j=10
+        j=j-1
+        if pressedKey == 8:
             print('Burst mode has ended')
             break
+        elif pressedKey == 27:
+            exit()
     return
 
 def video():
@@ -118,19 +131,20 @@ while True :
 
     if pressedKey == ord("s"):
         cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
-        white()
+        white_screen()
         print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
     elif pressedKey == ord("v"):
         cv2.setWindowTitle('camKapture', 'camKapture - Video')
         video()
+        cv2.setWindowTitle('camKapture', 'camKapture')
     elif pressedKey == ord("b"):
         cv2.setWindowTitle('camKapture', 'camKapture - Burst')
         burst()
-        break
+        cv2.setWindowTitle('camKapture', 'camKapture')
     elif pressedKey == ord("t"):
         cv2.setWindowTitle('camKapture', 'camKapture - Timer')
         count(10)
-        break
+        cv2.setWindowTitle('camKapture', 'camKapture')
     elif pressedKey == 27: # Esc to exit
         break
 

@@ -9,7 +9,7 @@ camKapture is an open source application that allows users to access their webca
 Clone the repository
 
 ```
-https://github.com/manojuppala/camKapture.git
+git clone https://github.com/manojuppala/camKapture.git
 ```
 
 Create and activate virtual env
@@ -32,19 +32,24 @@ Run using python3
 python3 camKapture.py
 ```
 
-## Usage
-
-`s` - capture image
-`v` - start recording video
-`p` - pause and unpause video capture
-`Esc` - quit
-
 ## Features
 
 - Cross-platform (GNU/Linux, Mac, Windows)
 - Take pictures and record videos with the webcam.
 - Keyboard based application
 - Written in Python and OpenCV.
+- Burst mode to capture multiple images.
+- Timer mode to capture image after 10 secs
+
+## Usage
+
+`s` - capture image  
+`v` - start recording video  
+`b` - enable burst mode
+`t` - enable timer mode
+`Backspace` - return from any mode
+`Space` - pause and unpause video capture  
+`Esc` - quit
 
 ## License
 
