@@ -1,5 +1,4 @@
-# camKapture is an open source application that allows users to access their webcam device and take pictures or 
-# create videos.
+# camKapture is an open source application that allows users to access their webcam device and take pictures or create videos.
 import cv2
 import math
 import os
@@ -32,21 +31,23 @@ def count(n):
     color=(255,255,255)
     thickness=5
     j=(n+1)*10-1
-    while j>=10:
-        success, frame = cap.read()
-        text=str(math.floor(j/10)) 
-        frame=cv2.putText(frame,text,coordinates,font,fontScale,(0,0,0),thickness+2,cv2.LINE_AA)
-        frame=cv2.putText(frame,text,coordinates,font,fontScale,color,thickness,cv2.LINE_AA)
-        cv2.imshow('camKapture', frame)
-        cv2.waitKeyEx(100)
-        j=j-1
-    else:
-        success, frame = cap.read()
-        cv2.imshow('camKapture', frame)
-        cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
-        white_screen()
-        print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
-        return
+    while True:
+        success, frame1 = cap.read()
+        success, frame2 = cap.read()
+        cv2.imshow('camKapture', frame1)
+        if j>=10:
+            text=str(math.floor(j/10)) 
+            cv2.putText(frame2,text,coordinates,font,fontScale,(0,0,0),thickness+2,cv2.LINE_AA)
+            cv2.putText(frame2,text,coordinates,font,fontScale,color,thickness,cv2.LINE_AA)
+            cv2.imshow('camKapture', frame2)
+            cv2.waitKeyEx(100)
+            j=j-1
+        else:
+            cv2.imshow('camKapture', frame1)
+            cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame1)
+            white_screen()
+            print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
+            return
 
 def burst():
     j=10
@@ -120,31 +121,30 @@ def video():
         else:
             break
 
-while True :
+while True:
     success, frame = cap.read()
     
     cv2.namedWindow('camKapture', flags=cv2.WINDOW_GUI_NORMAL)
-    cv2.imshow('camKapture',frame)
+    cv2.imshow('camKapture',frame)  
     cv2.resizeWindow('camKapture', 854, 480)
 
     pressedKey = cv2.waitKeyEx(1) & 0xFF
 
-    if pressedKey == ord("s"):
+    if pressedKey == ord("s"): # press s to save a frame
         cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
         white_screen()
         print('Image saved to '+os.path.join(img_directory , str(datetime.now())+'.jpg'))
-    elif pressedKey == ord("v"):
+    elif pressedKey == ord("v"): # press v to enter video mode
         cv2.setWindowTitle('camKapture', 'camKapture - Video')
         video()
         cv2.setWindowTitle('camKapture', 'camKapture')
-    elif pressedKey == ord("b"):
+    elif pressedKey == ord("b"): # press b to enter burst mode
         cv2.setWindowTitle('camKapture', 'camKapture - Burst')
         burst()
         cv2.setWindowTitle('camKapture', 'camKapture')
-    elif pressedKey == ord("t"):
+    elif pressedKey == ord("t"): # press t to enter timer mode
         cv2.setWindowTitle('camKapture', 'camKapture - Timer')
         count(10)
         cv2.setWindowTitle('camKapture', 'camKapture')
     elif pressedKey == 27: # Esc to exit
         break
-
