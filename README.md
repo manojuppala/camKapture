@@ -2,8 +2,11 @@
 
 camKapture is an open source application that allows users to access their webcam device and take pictures or create videos.
 
-<img src="assets/camkapture.png" alt="camKapture" width="150"/>
-<img src="assets/camkapture1.png" alt="camKapture" width="150"/>
+<p>
+  <img src="assets/camkapture.png" alt="camKapture" width="150"/>
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="assets/camkapture1.png" alt="camKapture" width="150"/>
+</p>
 
 ## Clone and Install
 
