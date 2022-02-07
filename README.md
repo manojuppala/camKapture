@@ -2,8 +2,11 @@
 
 camKapture is an open source application that allows users to access their webcam device and take pictures or create videos.
 
-<img src="assets/camkapture.png" alt="camKapture" width="150"/>
-<img src="assets/camkapture1.png" alt="camKapture" width="150"/>
+<p>
+  <img src="assets/camkapture.png" alt="camKapture" width="150"/>
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="assets/camkapture1.png" alt="camKapture" width="150"/>
+</p>
 
 ## Clone and Install
 
@@ -57,6 +60,9 @@ python3 camKapture.py
 `b` - enable burst mode  
 `t` - enable timer mode  
 `f` - enable full screen mode  
+`e` - enable effects screen mode or selct effect  
+`Shift`+`[` - next effect in effects mode  
+`Shift`+`]` - previous effect in effects mode  
 `Backspace` - return from any mode  
 `Space` - pause and unpause video capture  
 `Esc` - quit
