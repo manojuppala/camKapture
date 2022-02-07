@@ -1,1 +1,7 @@
-frame=cv2.rotate(frame, cv2.cv2.ROTATE_180)
+import cv2
+
+def flip_vertical(frame):
+    return cv2.flip(frame, 1)
+
+def flip_horizontal(frame):
+    return cv2.flip(frame, 0)

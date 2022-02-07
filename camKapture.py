@@ -1,6 +1,7 @@
 # camKapture is an open source application that allows users to access their webcam device and take pictures or create videos.
 import cv2, math, numpy as np, os
 from datetime import datetime
+from Effects import flip
 
 # path to write image and video files.
 img_directory = os.path.expanduser('~')+r'/Pictures/camKapture/'
@@ -10,6 +11,29 @@ if not os.path.exists(img_directory): os.mkdir(img_directory)
 if not os.path.exists(vid_directory): os.mkdir(vid_directory)
 
 fullscreen=False
+showeffect=False
+effects=[flip.flip_vertical, flip.flip_horizontal]
+current_effect = []
+
+# func to switch between different effects
+def show_effect(cap):
+    global showeffect, effects
+    k=0
+    while True:
+        success, frame1 = cap.read()
+        frame1 = effects[k](frame1)
+        cv2.imshow('camKapture',frame1)
+        pressedKey = cv2.waitKeyEx(1) & 0xFF
+        if pressedKey == ord("e"): 
+            showeffect = not showeffect 
+            return effects[k]
+        elif pressedKey == ord("}"): k=k+1
+        elif pressedKey == ord("{"): k=k-1
+        elif pressedKey == 8:
+            showeffect = not showeffect 
+            return []
+        if k==len(effects): k=0
+        elif k<0: k=abs(k)
 
 # a flash screen that appears every time a frame is saved
 def white_screen():
@@ -74,7 +98,7 @@ def burst(cap):
     return
 
 def video(cap):
-    global fullscreen
+    global fullscreen, showeffect, effects
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
     size = (frame_width, frame_height)
@@ -85,6 +109,10 @@ def video(cap):
     while True:
         success, frame = cap.read()
         pressedKey = cv2.waitKeyEx(1) & 0xFF
+
+        if current_effect:
+            frame=current_effect(frame)
+
         if success == True: 
             if(unpaused):
                 result.write(frame)
@@ -119,11 +147,17 @@ def main():
     cap= cv2.VideoCapture(0)
     cap.set(3,854)
     cap.set(4,480)
-    global fullscreen
-
+    global fullscreen, showeffect, effects, current_effect
+    
     while True:
         success, frame = cap.read()
         cv2.namedWindow('camKapture', flags=cv2.WINDOW_GUI_NORMAL)
+        if showeffect: 
+            cv2.setWindowTitle('camKapture', 'camKapture - Effects')
+            current_effect = show_effect(cap)
+            cv2.setWindowTitle('camKapture', 'camKapture')
+        if current_effect:
+            frame=current_effect(frame)
         cv2.imshow('camKapture',frame)
 
         if fullscreen:
@@ -150,7 +184,9 @@ def main():
             count(10,cap)
             cv2.setWindowTitle('camKapture', 'camKapture')
         elif pressedKey == ord("f"): # press f to enter fullscreen mode
-            fullscreen=not fullscreen
+            fullscreen = not fullscreen
+        elif pressedKey == ord("e"): # press e to enter effects mode
+            showeffect = not showeffect
         elif pressedKey == 27: # Esc to exit
             break
     return

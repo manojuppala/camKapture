@@ -3,6 +3,7 @@
 camKapture is an open source application that allows users to access their webcam device and take pictures or create videos.
 
 <img src="assets/camkapture.png" alt="camKapture" width="150"/>
+<img src="assets/camkapture1.png" alt="camKapture" width="150"/>
 
 ## Clone and Install
 
@@ -12,17 +13,25 @@ Clone the repository
 git clone https://github.com/manojuppala/camKapture.git
 ```
 
-Create and activate virtual env
+Create and activate virtual env  
+**Linux and Mac**
 
 ```
 python3 venv -m <env_name>
 source <env_name>/bin/activate
 ```
 
+**Windows**
+
+```
+python3 -m venv <env_name>
+.\<env_name>\Scripts\activate
+```
+
 Install dependencies
 
 ```
-cd camKapture.py
+cd camKapture
 pip install -r requirements.txt
 ```
 
