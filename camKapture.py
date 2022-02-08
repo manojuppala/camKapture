@@ -1,7 +1,7 @@
 # camKapture is an open source application that allows users to access their webcam device and take pictures or create videos.
 import cv2, math, numpy as np, os
 from datetime import datetime
-from Effects import flip
+from Effects import effects
 
 # path to write image and video files.
 img_directory = os.path.expanduser('~')+r'/Pictures/camKapture/'
@@ -12,28 +12,7 @@ if not os.path.exists(vid_directory): os.mkdir(vid_directory)
 
 fullscreen=False
 showeffect=False
-effects=[flip.flip_vertical, flip.flip_horizontal]
 current_effect = []
-
-# func to switch between different effects
-def show_effect(cap):
-    global showeffect, effects
-    k=0
-    while True:
-        success, frame1 = cap.read()
-        frame1 = effects[k](frame1)
-        cv2.imshow('camKapture',frame1)
-        pressedKey = cv2.waitKeyEx(1) & 0xFF
-        if pressedKey == ord("e"): 
-            showeffect = not showeffect 
-            return effects[k]
-        elif pressedKey == ord("}"): k=k+1
-        elif pressedKey == ord("{"): k=k-1
-        elif pressedKey == 8:
-            showeffect = not showeffect 
-            return []
-        if k==len(effects): k=0
-        elif k<0: k=abs(k)
 
 # a flash screen that appears every time a frame is saved
 def white_screen():
@@ -154,7 +133,7 @@ def main():
         cv2.namedWindow('camKapture', flags=cv2.WINDOW_GUI_NORMAL)
         if showeffect: 
             cv2.setWindowTitle('camKapture', 'camKapture - Effects')
-            current_effect = show_effect(cap)
+            showeffect, current_effect = effects.show_effect(cap,showeffect)
             cv2.setWindowTitle('camKapture', 'camKapture')
         if current_effect:
             frame=current_effect(frame)

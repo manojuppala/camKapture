@@ -61,8 +61,8 @@ python3 camKapture.py
 `t` - enable timer mode  
 `f` - enable full screen mode  
 `e` - enable effects screen mode or selct effect  
-`Shift`+`[` - next effect in effects mode  
-`Shift`+`]` - previous effect in effects mode  
+`Shift`+`]` - next effect in effects mode  
+`Shift`+`[` - previous effect in effects mode  
 `Backspace` - return from any mode  
 `Space` - pause and unpause video capture  
 `Esc` - quit
