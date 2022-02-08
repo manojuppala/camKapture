@@ -43,7 +43,10 @@ def count(n,cap):
     while True:
         success, frame1 = cap.read()
         success, frame2 = cap.read()
+        if current_effect:
+            frame=current_effect(frame)
         cv2.imshow('camKapture', frame1)
+
         if j>=10:
             text=str(math.floor(j/10)) 
             text_display(frame2,'custom',text,(400,250),4,(255,255,255),5)
@@ -62,7 +65,10 @@ def burst(cap):
     while True :
         success, frame = cap.read()
         pressedKey = cv2.waitKeyEx(1) & 0xFF
+        if current_effect:
+            frame=current_effect(frame)
         cv2.imshow('camKapture', frame)
+
         if j==0:
             cv2.imwrite(os.path.join(img_directory , str(datetime.now())+'.jpg'),frame)
             white_screen()
@@ -82,7 +88,7 @@ def video(cap):
     frame_height = int(cap.get(4))
     size = (frame_width, frame_height)
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-    result = cv2.VideoWriter(os.path.join(vid_directory , str(datetime.now())+'.avi'),fourcc,20, size)
+    result = cv2.VideoWriter(os.path.join(vid_directory , str(datetime.now())+'.avi'),fourcc,15, size)
     unpaused=True
 
     while True:
@@ -91,7 +97,16 @@ def video(cap):
 
         if current_effect:
             frame=current_effect(frame)
-
+        
+        # show fps on the screen
+        (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
+        if int(major_ver)  < 3 :
+            fps = video.get(cv2.cv.CV_CAP_PROP_FPS)
+            print("Video FPS: {0}".format(fps))
+        else :
+            fps = video.get(cv2.CAP_PROP_FPS)
+            print("Video FPS : {0}".format(fps))  
+        
         if success == True: 
             if(unpaused):
                 result.write(frame)
