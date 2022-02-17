@@ -98,17 +98,18 @@ def video(cap):
         if current_effect:
             frame=current_effect(frame)
         
-        # show fps on the screen
-        (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
-        if int(major_ver)  < 3 :
-            fps = video.get(cv2.cv.CV_CAP_PROP_FPS)
-            print("Video FPS: {0}".format(fps))
-        else :
-            fps = video.get(cv2.CAP_PROP_FPS)
-            print("Video FPS : {0}".format(fps))  
+        # # show fps on the screen
+        # (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
+        # if int(major_ver)  < 3 :
+        #     fps = video.get(cv2.cv.CV_CAP_PROP_FPS)
+        #     print("Video FPS: {0}".format(fps))
+        # else :
+        #     fps = video.get(cv2.CAP_PROP_FPS)
+        #     print("Video FPS : {0}".format(fps))  
         
         if success == True: 
             if(unpaused):
+                # frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
                 result.write(frame)
                 text_display(frame,'top','Recording...')
             else:

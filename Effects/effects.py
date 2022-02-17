@@ -1,7 +1,10 @@
 import cv2
 from .flip import flip_vertical, flip_horizontal
+from .gray import gray
+from .blur import blur
+from .edge import edge
 
-effects=[flip_vertical, flip_horizontal]
+effects=[flip_vertical, flip_horizontal, gray, blur, edge]
 
 # func to switch between different effects
 def show_effect(cap,showeffect):
